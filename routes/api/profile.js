@@ -282,7 +282,8 @@ router.delete('/experience/:exp_id', passport.authenticate('jwt', {
         return res.status(404).json(errors)
       }
       //get removeindex
-      const removeindex = profile.experience.map(item => item).indexOf(req.params.exp_id)
+      const removeindex = profile.experience.map(item => item.id)
+      .indexOf(req.params.exp_id)
 
       //splice out of array
       profile.experience.splice(removeindex,1)
@@ -311,7 +312,8 @@ router.delete('/education/:edu_id', passport.authenticate('jwt', {
         return res.status(404).json(errors)
       }
       //get removeindex
-      const removeindex = profile.education.map(item => item).indexOf(req.params.edu_id)
+      const removeindex = profile.education.map(item => item.id)
+      .indexOf(req.params.edu_id)
 
       //splice out of array
       profile.education.splice(removeindex,1)
