@@ -85,7 +85,7 @@ router.delete('/:id', passport.authenticate('jwt', {
         success: true
       }))
     })
-    .cathc(err => res.status(404).json({
+    .catch(err => res.status(404).json({
       msg: "Post not found"
     }))
   })
@@ -115,7 +115,7 @@ router.post('/like/:id', passport.authenticate('jwt', {
 
         post.save().then(post => res.json(post))
       })
-      .cathc(err => res.status(404).json({
+      .catch(err => res.status(404).json({
         msg: "Post not found"
       }))
   })
@@ -124,7 +124,7 @@ router.post('/like/:id', passport.authenticate('jwt', {
 //@route POST api/posts/unlike/:id
 //@desc unlike post
 //@access Private
-router.delete('/unlike/:id', passport.authenticate('jwt', {
+router.post('/unlike/:id', passport.authenticate('jwt', {
   session: false
 }), (req, res) => {
   Profile.findOne({
@@ -146,9 +146,9 @@ router.delete('/unlike/:id', passport.authenticate('jwt', {
 
       post.save().then(post => res.json(post))
     })
-      .cathc(err => res.status(404).json({
-        msg: "Post not found"
-      }))
+    .catch(err => res.status(404).json({
+      msg: "Post not found"
+    }))
   })
 })
 
@@ -157,7 +157,7 @@ router.delete('/unlike/:id', passport.authenticate('jwt', {
 //@access private
 router.post('/comment/:id', passport.authenticate('jwt', {
   session: false
-}, (req, res) => {
+}), (req, res) => {
   const {
     errors,
     isValid
@@ -186,14 +186,14 @@ router.post('/comment/:id', passport.authenticate('jwt', {
   .catch(err => res.status(404).json({
     msg: "Post not found"
   }))
-}))
+})
 
 //@route  DELETE api/posts/comment/:id/:comment_id
 //@desc   Remove comment to post
 //@access private
 router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', {
   session: false
-}, (req, res) => {
+}), (req, res) => {
   Post.findById(req.params.id).then(post => {
       //check to see if comment exists
       if(post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
@@ -204,7 +204,7 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', {
 
       const removeIndex = post.comments.map(comment => comment._id.toString()).indexOf(req.params.comment_id)
 
-      post.comment.splice(removeIndex,1)
+      post.comments.splice(removeIndex,1)
 
       //save
       post.save().then(post => res.json(post))
@@ -212,6 +212,6 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', {
     .catch(err => res.status(404).json({
       msg: "Post not found"
     }))
-}))
+})
 
 module.exports = router

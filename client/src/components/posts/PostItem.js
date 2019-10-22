@@ -94,12 +94,12 @@ class PostItem extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
 }
 
-PostItem.defautProps = {
+PostItem.defaultProps = {
   showActions: true
 }
 
