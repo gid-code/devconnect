@@ -105,7 +105,7 @@ class Register extends Component {
                   name = "password2"
                   />
                 
-                <input type="submit" className="btn btn-info btn-block mt-4" />
+                <input type="submit" className="btn btn-info btn-block mt-4" value="Register"/>
               </form>
             </div>
           </div>
